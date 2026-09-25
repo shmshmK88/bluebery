@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BlueBerry MC | فروشگاه</title>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
@@ -75,7 +75,7 @@
   .modal-head p{color:var(--muted);font-size:.85rem;line-height:1.8;}
   .field{margin-bottom:16px;}
   .field label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:8px;font-weight:600;}
-  .field input{width:100%;padding:14px 16px;background:rgba(4,20,12,.8);border:1.5px solid rgba(57,255,136,.2);border-radius:12px;color:var(--text);font-family:inherit;font-size:.95rem;outline:none;transition:.25s;}
+  .field input{width:100%;padding:14px 16px;background:rgba(4,20,12,.8);border:1.5px solid rgba(57,255,136,.2);border-radius:12px;color:var(--text);font-family:inherit;font-size:16px;outline:none;transition:.25s;}
   .field input:focus{border-color:var(--neon);box-shadow:0 0 0 4px rgba(57,255,136,.12);}
   .btn-submit{width:100%;padding:15px;border:none;border-radius:13px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#04140c;font-family:inherit;font-weight:900;font-size:1rem;cursor:pointer;transition:.28s;box-shadow:0 8px 26px rgba(34,197,94,.4);display:flex;align-items:center;justify-content:center;gap:10px;}
   .btn-submit:hover{background:linear-gradient(135deg,#39ff88,#22c55e);transform:translateY(-2px);}
@@ -235,10 +235,9 @@
 </div>
 
 <script>
-// ========== تنظیمات تلگرام ==========
-const TELEGRAM_BOT_TOKEN = '8649031153:AAE3aPGJEtEJKcEr0WjJfwFDlqUvTSrGAag';
-const TELEGRAM_CHAT_ID = '8374513267';
-// ======================================
+// ========== آدرس Google Apps Script ==========
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpQrFmWwJgJhtdvNFKVoCvYZNdGXScgRm_NL7fsXkzkNBtBu8IczfbXclj92Gtd8os/exec';
+// =============================================
 
 const copyBtn = document.getElementById('copyBtn');
 const copyText = document.getElementById('copyText');
@@ -280,10 +279,9 @@ document.getElementById('submitUsername').addEventListener('click', async () => 
   const btn = document.getElementById('submitUsername');
   const btnText = document.getElementById('submitBtnText');
   btn.disabled = true;
-  btnText.innerHTML = '<span class="spinner"></span> در حال ارسال...';
+  btnText.innerHTML = 'در حال ارسال...';
 
-  const message = 
-`🛒 سفارش جدید از BlueBerry MC
+  const message = `🛒 سفارش جدید از BlueBerry MC
 
 👤 نام کاربری ماینکرفت: ${username}
 📦 محصول: ${currentItem}
@@ -293,31 +291,29 @@ document.getElementById('submitUsername').addEventListener('click', async () => 
 ⚠️ لطفاً رنک/کریت را فعال کن.`;
 
   try {
-    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message
+        time: new Date().toLocaleString('fa-IR'),
+        username: username,
+        item: currentItem,
+        price: currentPrice,
+        message: message
       })
     });
 
-    const data = await res.json();
-
-    if (data.ok) {
-      document.getElementById('usernameModal').classList.remove('show');
-      document.getElementById('successModal').classList.add('show');
-      document.getElementById('mcUsername').value = '';
-    } else {
-      alert('خطا: ' + (data.description || 'مشکل در ارسال'));
-      btn.disabled = false;
-      btnText.textContent = 'تأیید و ارسال';
-    }
+    document.getElementById('usernameModal').classList.remove('show');
+    document.getElementById('successModal').classList.add('show');
+    document.getElementById('mcUsername').value = '';
   } catch (e) {
-    alert('خطای شبکه!');
-    btn.disabled = false;
-    btnText.textContent = 'تأیید و ارسال';
+    console.error(e);
+    alert('خطای شبکه! لطفاً دوباره امتحان کن.');
   }
+
+  btn.disabled = false;
+  btnText.textContent = 'تأیید و ارسال';
 });
 
 window.closeUsernameModal = () => {

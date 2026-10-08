@@ -214,6 +214,9 @@ footer{text-align:center;padding:30px;color:#9fc9b3;font-size:.85rem;margin-top:
 </div>
 
 <script>
+// ⚠️ لینک Apps Script خودت
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpQrFmWwJgJhtdvNFKVoCvYZNdGXScgRm_NL7fsXkzkNBtBu8IczfbXclj92Gtd8os/exec';
+
 var gateway='',item='',price='';
 
 function toggleTheme(){
@@ -254,12 +257,31 @@ function openBuy(i,p,g){
 
 function submitBuy(e){
   e.preventDefault();
-  var u=document.getElementById('username').value.trim();
-  var em=document.getElementById('email').value.trim();
+  var u = document.getElementById('username').value.trim();
+  var em = document.getElementById('email').value.trim();
   if(!u){alert('نام کاربری رو وارد کن');return}
-  var url=gateway+'&mc_username='+encodeURIComponent(u);
-  if(em)url+='&email='+encodeURIComponent(em);
-  window.location.href=url;
+
+  // ارسال به Google Apps Script
+  try {
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        username: u,
+        item: item,
+        price: price,
+        email: em
+      })
+    }).catch(function(){});
+  } catch(err) {}
+
+  // بعد از ۱ ثانیه برو به درگاه
+  setTimeout(function(){
+    var url = gateway + '&mc_username=' + encodeURIComponent(u);
+    if(em) url += '&email=' + encodeURIComponent(em);
+    window.location.href = url;
+  }, 1200);
 }
 
 function showModal(id){document.getElementById(id).classList.add('show')}
@@ -282,4 +304,4 @@ window.onload=function(){
 };
 </script>
 </body>
-          </html>
+</html>

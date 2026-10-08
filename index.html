@@ -4,312 +4,282 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BlueBerry MC</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#04140c;--text:#e8fff2;--muted:#9fc9b3;--neon:#39ff88;--card:linear-gradient(160deg,rgba(11,61,36,.9),rgba(4,20,12,.95));--border:rgba(57,255,136,.18);}
-body.light{--bg:#f0fdf4;--text:#04140c;--muted:#4b7c5f;--card:linear-gradient(160deg,#fff,#f0fdf4);--border:rgba(22,163,74,.3);}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Vazirmatn',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:.3s;}
-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 6%;background:rgba(4,20,12,.9);border-bottom:1px solid var(--border);}
-body.light nav{background:rgba(255,255,255,.9);}
-.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.25rem;}
-.logo .berry{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#4ade80,#16a34a 60%,#0b3d24);display:grid;place-items:center;font-size:1.1rem;}
-.logo span{color:var(--neon);}
-.theme-btn{background:rgba(57,255,136,.1);border:1.5px solid var(--border);color:var(--neon);width:40px;height:40px;border-radius:12px;cursor:pointer;font-size:1.2rem;}
-header{text-align:center;padding:80px 6%;}
-h1{font-size:clamp(2rem,6vw,4rem);font-weight:900;line-height:1.3;margin-bottom:20px;}
-h1 span{background:linear-gradient(90deg,#39ff88,#38bdf8);-webkit-background-clip:text;background-clip:text;color:transparent;}
-header p{color:var(--muted);max-width:600px;margin:0 auto 30px;line-height:2;}
-.ip-box{display:inline-flex;align-items:center;gap:12px;background:rgba(7,43,25,.85);border:1.5px solid rgba(57,255,136,.35);border-radius:16px;padding:14px 20px;flex-wrap:wrap;justify-content:center;}
-body.light .ip-box{background:#fff;}
-.ip-text{font-family:monospace;font-size:1.2rem;font-weight:700;color:var(--neon);direction:ltr;}
-.copy-btn{background:linear-gradient(135deg,#22c55e,#16a34a);color:#04140c;border:none;cursor:pointer;padding:12px 26px;border-radius:12px;font-family:inherit;font-weight:800;font-size:.95rem;}
-.copy-btn:hover{transform:translateY(-2px);}
-.copy-btn.done{background:#a7f3d0;}
-section{padding:60px 6%;}
-.section-title{text-align:center;margin-bottom:40px;}
-.section-title h2{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:900;}
-.section-title h2 span{color:var(--neon);}
-.tabs{display:flex;justify-content:center;gap:12px;margin-bottom:30px;flex-wrap:wrap;}
-.tab-btn{background:rgba(7,43,25,.7);border:1.5px solid rgba(57,255,136,.2);color:var(--muted);padding:12px 28px;border-radius:12px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.9rem;}
-body.light .tab-btn{background:#fff;}
-.tab-btn.active{background:linear-gradient(135deg,#22c55e,#16a34a);color:#04140c;}
-.tab-content{display:none;}
-.tab-content.active{display:block;}
-.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:1200px;margin:0 auto;}
-.product-card{background:var(--card);border:1.5px solid var(--border);border-radius:22px;padding:30px 24px;position:relative;}
-.product-card.popular{border-color:var(--neon);}
-.pop-tag{position:absolute;top:14px;left:-36px;background:linear-gradient(135deg,#39ff88,#16a34a);color:#04140c;font-size:.7rem;font-weight:900;padding:6px 42px;transform:rotate(-38deg);}
-.product-icon{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;font-size:1.7rem;background:rgba(57,255,136,.1);border:1px solid rgba(57,255,136,.25);margin-bottom:16px;}
-.product-name{font-size:1.3rem;font-weight:900;margin-bottom:6px;}
-.product-name.green{color:var(--neon);}
-.product-name.gold{color:#ffd76e;}
-.product-name.blue{color:#38bdf8;}
-.product-name.purple{color:#a855f7;}
-.product-desc{color:var(--muted);font-size:.82rem;margin-bottom:16px;}
-.price{font-size:1.6rem;font-weight:900;margin-bottom:20px;}
-.price small{font-size:.8rem;color:var(--muted);}
-.features{list-style:none;margin-bottom:22px;}
-.features li{display:flex;align-items:center;gap:10px;font-size:.86rem;padding:6px 0;border-bottom:1px dashed rgba(57,255,136,.1);}
-.features li:last-child{border-bottom:none;}
-.features li::before{content:'✓';color:var(--neon);font-weight:900;width:18px;height:18px;border-radius:50%;background:rgba(57,255,136,.12);display:grid;place-items:center;font-size:.68rem;flex-shrink:0;}
-.buy-btn{display:flex;align-items:center;justify-content:center;width:100%;padding:14px;border-radius:13px;font-family:inherit;font-weight:800;font-size:.92rem;cursor:pointer;background:rgba(57,255,136,.1);color:var(--neon);border:1.5px solid rgba(57,255,136,.4);}
-.buy-btn:hover{background:linear-gradient(135deg,#39ff88,#22c55e);color:#04140c;}
-.buy-btn.solid{background:linear-gradient(135deg,#22c55e,#16a34a);color:#04140c;border:none;}
-.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(2,10,6,.88);display:none;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.show{display:flex;}
-.modal{width:100%;max-width:440px;background:linear-gradient(165deg,#0b3d24,#04140c);border:1.5px solid rgba(57,255,136,.35);border-radius:24px;padding:36px 30px;position:relative;max-height:90vh;overflow-y:auto;}
-body.light .modal{background:#fff;}
-.modal-head{text-align:center;margin-bottom:24px;}
-.modal-head .icon{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#4ade80,#16a34a 60%,#0b3d24);display:grid;place-items:center;font-size:2rem;margin:0 auto 16px;}
-.modal-head h3{font-size:1.3rem;font-weight:900;margin-bottom:6px;}
-.modal-head p{color:var(--muted);font-size:.85rem;}
-.field{margin-bottom:16px;}
-.field label{display:block;font-size:.82rem;color:var(--muted);margin-bottom:8px;font-weight:600;}
-.field input{width:100%;padding:14px 16px;background:rgba(4,20,12,.8);border:1.5px solid rgba(57,255,136,.2);border-radius:12px;color:var(--text);font-family:inherit;font-size:16px;outline:none;}
-body.light .field input{background:#fff;color:#04140c;}
-.field input:focus{border-color:var(--neon);}
-.btn-submit{width:100%;padding:15px;border:none;border-radius:13px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#04140c;font-family:inherit;font-weight:900;font-size:1rem;cursor:pointer;}
-.modal-close{position:absolute;top:20px;left:20px;background:rgba(255,255,255,.06);border:none;color:var(--muted);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1.1rem;}
-.support-btn{position:fixed;bottom:24px;left:24px;z-index:999;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);border:none;cursor:pointer;font-size:1.7rem;color:#04140c;}
-footer{text-align:center;padding:40px 6%;border-top:1px solid rgba(57,255,136,.12);color:var(--muted);font-size:.85rem;margin-top:60px;}
-footer strong{color:var(--neon);}
-.support-option{display:flex;align-items:center;gap:12px;padding:14px 18px;background:rgba(57,255,136,.08);border:1.5px solid rgba(57,255,136,.3);border-radius:14px;text-decoration:none;color:var(--text);margin-bottom:12px;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Vazirmatn,sans-serif;background:#04140c;color:#e8fff2;min-height:100vh}
+body.light{background:#f0fdf4;color:#04140c}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 6%;background:#072b19;border-bottom:1px solid #1a4d2e}
+body.light nav{background:#fff}
+.logo{font-weight:900;font-size:1.2rem;color:#39ff88}
+body.light .logo{color:#16a34a}
+.btn{background:#22c55e;color:#04140c;border:none;padding:12px 24px;border-radius:10px;font-family:inherit;font-weight:800;cursor:pointer;font-size:1rem}
+.btn:hover{background:#39ff88}
+header{text-align:center;padding:60px 6%}
+h1{font-size:2.2rem;font-weight:900;margin-bottom:15px;line-height:1.4}
+h1 span{color:#39ff88}
+header p{color:#9fc9b3;margin-bottom:25px;line-height:2}
+body.light header p{color:#4b7c5f}
+.ip-box{display:inline-flex;align-items:center;gap:12px;background:#0b3d24;border:1.5px solid #39ff88;border-radius:14px;padding:14px 20px;flex-wrap:wrap;justify-content:center}
+body.light .ip-box{background:#fff;border-color:#16a34a}
+.ip{font-family:monospace;font-size:1.1rem;font-weight:700;color:#39ff88;direction:ltr}
+section{padding:40px 6%}
+.title{text-align:center;font-size:1.8rem;font-weight:900;margin-bottom:30px}
+.title span{color:#39ff88}
+.tabs{display:flex;justify-content:center;gap:10px;margin-bottom:30px;flex-wrap:wrap}
+.tab{background:#0b3d24;color:#9fc9b3;border:1.5px solid #1a4d2e;padding:12px 24px;border-radius:10px;font-family:inherit;font-weight:700;cursor:pointer;font-size:.9rem}
+body.light .tab{background:#fff}
+.tab.active{background:#22c55e;color:#04140c;border-color:#22c55e}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.card{background:#0b3d24;border:1.5px solid #1a4d2e;border-radius:18px;padding:26px 22px;position:relative}
+body.light .card{background:#fff;border-color:#bbf7d0}
+.card.hot{border-color:#39ff88}
+.hot-tag{position:absolute;top:12px;left:-32px;background:#39ff88;color:#04140c;font-size:.7rem;font-weight:900;padding:5px 38px;transform:rotate(-38deg)}
+.icon{width:55px;height:55px;border-radius:14px;display:grid;place-items:center;font-size:1.6rem;background:#04140c;margin-bottom:15px}
+body.light .icon{background:#f0fdf4}
+.name{font-size:1.2rem;font-weight:900;margin-bottom:6px;color:#39ff88}
+.name.gold{color:#ffd76e}.name.blue{color:#38bdf8}.name.purple{color:#a855f7}
+.desc{color:#9fc9b3;font-size:.85rem;margin-bottom:15px}
+body.light .desc{color:#4b7c5f}
+.price{font-size:1.5rem;font-weight:900;margin-bottom:18px}
+.price small{font-size:.75rem;color:#9fc9b3}
+ul{list-style:none;margin-bottom:18px}
+li{padding:6px 0;font-size:.85rem;border-bottom:1px dashed #1a4d2e}
+li:last-child{border:none}
+li::before{content:'✓ ';color:#39ff88;font-weight:900}
+.buy{width:100%;padding:13px;border-radius:10px;font-family:inherit;font-weight:800;font-size:.9rem;cursor:pointer;background:#0b3d24;color:#39ff88;border:1.5px solid #39ff88}
+.buy:hover{background:#39ff88;color:#04140c}
+.buy.solid{background:#22c55e;color:#04140c;border:none}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+.overlay.show{display:flex}
+.modal{background:#0b3d24;border:1.5px solid #39ff88;border-radius:20px;padding:30px;max-width:420px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+body.light .modal{background:#fff}
+.modal h3{text-align:center;margin-bottom:20px;font-size:1.3rem;color:#39ff88}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:.85rem;margin-bottom:6px;color:#9fc9b3}
+.field input{width:100%;padding:13px;background:#04140c;border:1.5px solid #1a4d2e;border-radius:10px;color:#e8fff2;font-family:inherit;font-size:16px}
+body.light .field input{background:#f0fdf4;color:#04140c}
+.field input:focus{outline:none;border-color:#39ff88}
+.close{position:absolute;top:15px;left:15px;background:#1a4d2e;color:#9fc9b3;border:none;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1.1rem}
+.close:hover{background:#dc2626;color:#fff}
+.support{position:fixed;bottom:20px;left:20px;width:55px;height:55px;border-radius:50%;background:#22c55e;border:none;cursor:pointer;font-size:1.5rem;z-index:99}
+.opt{display:flex;align-items:center;gap:12px;padding:14px;background:#04140c;border:1.5px solid #1a4d2e;border-radius:12px;text-decoration:none;color:#e8fff2;margin-bottom:10px}
+.opt:hover{border-color:#39ff88}
+body.light .opt{background:#f0fdf4;color:#04140c}
+footer{text-align:center;padding:30px;color:#9fc9b3;font-size:.85rem;margin-top:40px;border-top:1px solid #1a4d2e}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo"><div class="berry">🫐</div>Blue<span>Berry</span>MC</div>
-  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+  <div class="logo">🫐 BlueBerry MC</div>
+  <button class="btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
 </nav>
 
 <header>
-  <h1>به <span>BlueBerry MC</span><br>خوش آمدید</h1>
-  <p>رنک یا کریت بخر، وارد دنیای ما شو، و با رأی دادن پاداش بگیر!</p>
+  <h1>به <span>BlueBerry MC</span> خوش آمدید</h1>
+  <p>رنک یا کریت بخر، وارد دنیای ما شو!</p>
   <div class="ip-box">
-    <span style="color:var(--muted);font-size:.85rem;">🌐</span>
-    <span class="ip-text" id="serverIP">play.blueberymc.ir</span>
-    <button class="copy-btn" id="copyBtn" onclick="copyIP()">کپی</button>
+    <span class="ip" id="ip">play.blueberymc.ir</span>
+    <button class="btn" onclick="copyIP()">کپی</button>
   </div>
 </header>
 
 <section>
-  <div class="section-title"><h2>🛒 <span>فروشگاه</span></h2></div>
+  <div class="title">🛒 <span>فروشگاه</span></div>
   <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('ranks', this)">👑 رنک‌ها</button>
-    <button class="tab-btn" onclick="showTab('crates', this)">📦 کریت‌ها</button>
-    <button class="tab-btn" onclick="showTab('items', this)">💎 آیتم‌ها</button>
+    <button class="tab active" onclick="showTab('ranks', this)">👑 رنک‌ها</button>
+    <button class="tab" onclick="showTab('crates', this)">📦 کریت‌ها</button>
+    <button class="tab" onclick="showTab('items', this)">💎 آیتم‌ها</button>
   </div>
 
-  <div class="tab-content active" id="ranks-tab">
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-icon">🌿</div>
-        <div class="product-name green">VIP</div>
-        <div class="product-desc">شروع یک تجربه متفاوت</div>
+  <div id="ranks" class="tab-content">
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🌿</div>
+        <div class="name">VIP</div>
+        <div class="desc">شروع یک تجربه متفاوت</div>
         <div class="price">۱۰۰ <small>تومان</small></div>
-        <ul class="features"><li>پریفیکس سبز</li><li>۲ هوم اضافه</li><li>دسترسی به /hat</li></ul>
-        <button class="buy-btn" onclick="openBuy('VIP', '100', 'https://majdmam.ir/gateway.php?id=167')">خرید VIP</button>
+        <ul><li>پریفیکس سبز</li><li>۲ هوم اضافه</li><li>دسترسی به /hat</li></ul>
+        <button class="buy" onclick="openBuy('VIP','100','https://majdmam.ir/gateway.php?id=167')">خرید VIP</button>
       </div>
-      <div class="product-card popular">
-        <div class="pop-tag">محبوب</div>
-        <div class="product-icon">💎</div>
-        <div class="product-name gold">MVP</div>
-        <div class="product-desc">پرطرفدارترین رنک</div>
+      <div class="card hot">
+        <div class="hot-tag">محبوب</div>
+        <div class="icon">💎</div>
+        <div class="name gold">MVP</div>
+        <div class="desc">پرطرفدارترین رنک</div>
         <div class="price">۲۰۰ <small>تومان</small></div>
-        <ul class="features"><li>تمام امکانات VIP</li><li>پریفیکس طلایی</li><li>۵ هوم</li></ul>
-        <button class="buy-btn solid" onclick="openBuy('MVP', '200', 'https://majdmam.ir/gateway.php?id=168')">خرید MVP</button>
+        <ul><li>تمام امکانات VIP</li><li>پریفیکس طلایی</li><li>۵ هوم</li></ul>
+        <button class="buy solid" onclick="openBuy('MVP','200','https://majdmam.ir/gateway.php?id=168')">خرید MVP</button>
       </div>
-      <div class="product-card">
-        <div class="product-icon">⚡</div>
-        <div class="product-name blue">PLUS</div>
-        <div class="product-desc">رنک پیشرفته</div>
+      <div class="card">
+        <div class="icon">⚡</div>
+        <div class="name blue">PLUS</div>
+        <div class="desc">رنک پیشرفته</div>
         <div class="price">۴۰۰ <small>تومان</small></div>
-        <ul class="features"><li>تمام امکانات MVP</li><li>پریفیکس آبی</li><li>هوم نامحدود</li></ul>
-        <button class="buy-btn" onclick="openBuy('PLUS', '400', 'https://majdmam.ir/gateway.php?id=169')">خرید PLUS</button>
+        <ul><li>تمام امکانات MVP</li><li>پریفیکس آبی</li><li>هوم نامحدود</li></ul>
+        <button class="buy" onclick="openBuy('PLUS','400','https://majdmam.ir/gateway.php?id=169')">خرید PLUS</button>
       </div>
-      <div class="product-card">
-        <div class="product-icon">👑</div>
-        <div class="product-name purple">SPONSOR</div>
-        <div class="product-desc">قدرت مطلق</div>
+      <div class="card">
+        <div class="icon">👑</div>
+        <div class="name purple">SPONSOR</div>
+        <div class="desc">قدرت مطلق</div>
         <div class="price">۱,۰۰۰,۰۰۰ <small>تومان</small></div>
-        <ul class="features"><li>تمام امکانات PLUS</li><li>پریفیکس افسانه‌ای</li><li>پشتیبانی ۲۴/۷</li></ul>
-        <button class="buy-btn" onclick="openBuy('SPONSOR', '1000000', 'https://majdmam.ir/gateway.php?id=170')">خرید SPONSOR</button>
+        <ul><li>تمام امکانات PLUS</li><li>پریفیکس افسانه‌ای</li><li>پشتیبانی ۲۴/۷</li></ul>
+        <button class="buy" onclick="openBuy('SPONSOR','1000000','https://majdmam.ir/gateway.php?id=170')">خرید SPONSOR</button>
       </div>
     </div>
   </div>
 
-  <div class="tab-content" id="crates-tab">
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-icon">📦</div>
-        <div class="product-name green">Common Crate</div>
-        <div class="product-desc">کریت معمولی</div>
+  <div id="crates" class="tab-content" style="display:none">
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📦</div>
+        <div class="name">Common Crate</div>
+        <div class="desc">کریت معمولی</div>
         <div class="price">۳۰ <small>تومان</small></div>
-        <ul class="features"><li>آیتم‌های پایه</li><li>مناسب شروع</li></ul>
-        <button class="buy-btn" onclick="openBuy('Common Crate', '30', 'https://majdmam.ir/gateway.php?id=175')">خرید کریت</button>
+        <ul><li>آیتم‌های پایه</li><li>مناسب شروع</li></ul>
+        <button class="buy" onclick="openBuy('Common Crate','30','https://majdmam.ir/gateway.php?id=175')">خرید</button>
       </div>
-      <div class="product-card popular">
-        <div class="pop-tag">پرفروش</div>
-        <div class="product-icon">🏆</div>
-        <div class="product-name gold">Epic Crate</div>
-        <div class="product-desc">کریت حماسی</div>
+      <div class="card hot">
+        <div class="hot-tag">پرفروش</div>
+        <div class="icon">🏆</div>
+        <div class="name gold">Epic Crate</div>
+        <div class="desc">کریت حماسی</div>
         <div class="price">۱۰۰ <small>تومان</small></div>
-        <ul class="features"><li>آیتم‌های حماسی</li><li>شانس لجندری</li></ul>
-        <button class="buy-btn solid" onclick="openBuy('Epic Crate', '100', 'https://majdmam.ir/gateway.php?id=177')">خرید کریت</button>
+        <ul><li>آیتم‌های حماسی</li><li>شانس لجندری</li></ul>
+        <button class="buy solid" onclick="openBuy('Epic Crate','100','https://majdmam.ir/gateway.php?id=177')">خرید</button>
       </div>
     </div>
   </div>
 
-  <div class="tab-content" id="items-tab">
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-icon">⚔️</div>
-        <div class="product-name green">Netherite Sword</div>
-        <div class="product-desc">شمشیر ندرایت</div>
+  <div id="items" class="tab-content" style="display:none">
+    <div class="grid">
+      <div class="card">
+        <div class="icon">⚔️</div>
+        <div class="name">Netherite Sword</div>
+        <div class="desc">شمشیر ندرایت</div>
         <div class="price">۵۰ <small>تومان</small></div>
-        <ul class="features"><li>Sharpness V</li><li>Unbreaking III</li></ul>
-        <button class="buy-btn" onclick="openBuy('Netherite Sword', '50', 'https://majdmam.ir/gateway.php?id=180')">خرید آیتم</button>
+        <ul><li>Sharpness V</li><li>Unbreaking III</li></ul>
+        <button class="buy" onclick="openBuy('Netherite Sword','50','https://majdmam.ir/gateway.php?id=180')">خرید</button>
       </div>
-      <div class="product-card">
-        <div class="product-icon">🛡️</div>
-        <div class="product-name blue">Netherite Armor</div>
-        <div class="product-desc">ست کامل آرمور</div>
+      <div class="card">
+        <div class="icon">🛡️</div>
+        <div class="name blue">Netherite Armor</div>
+        <div class="desc">ست کامل آرمور</div>
         <div class="price">۱۵۰ <small>تومان</small></div>
-        <ul class="features"><li>Protection IV</li><li>Mending</li></ul>
-        <button class="buy-btn" onclick="openBuy('Netherite Armor', '150', 'https://majdmam.ir/gateway.php?id=181')">خرید آیتم</button>
+        <ul><li>Protection IV</li><li>Mending</li></ul>
+        <button class="buy" onclick="openBuy('Netherite Armor','150','https://majdmam.ir/gateway.php?id=181')">خرید</button>
       </div>
     </div>
   </div>
 </section>
 
-<footer>© 2026 <strong>BlueBerry MC</strong> - تمامی حقوق محفوظ است</footer>
+<footer>© 2026 BlueBerry MC</footer>
 
-<button class="support-btn" onclick="document.getElementById('supportModal').classList.add('show')">💬</button>
+<button class="support" onclick="showModal('supportModal')">💬</button>
 
-<div class="modal-overlay" id="buyModal">
+<div class="overlay" id="buyModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('buyModal')">✕</button>
-    <div class="modal-head">
-      <div class="icon">🛒</div>
-      <h3>خرید محصول</h3>
-      <p id="modalDesc">اطلاعات خود را وارد کنید</p>
-    </div>
-    <form id="buyForm" onsubmit="submitBuy(event)">
+    <button class="close" onclick="hideModal('buyModal')">✕</button>
+    <h3>🛒 خرید محصول</h3>
+    <p id="modalDesc" style="text-align:center;color:#9fc9b3;margin-bottom:20px"></p>
+    <form onsubmit="submitBuy(event)">
       <div class="field">
         <label>نام کاربری ماینکرفت</label>
-        <input type="text" id="mcUsername" required placeholder="مثلاً: Steve">
+        <input type="text" id="username" required placeholder="Steve">
       </div>
       <div class="field">
         <label>ایمیل (اختیاری)</label>
         <input type="email" id="email" placeholder="example@email.com">
       </div>
-      <button type="submit" class="btn-submit">پرداخت و ادامه</button>
+      <button type="submit" class="btn" style="width:100%">پرداخت و ادامه</button>
     </form>
   </div>
 </div>
 
-<div class="modal-overlay" id="supportModal">
+<div class="overlay" id="supportModal">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal('supportModal')">✕</button>
-    <div class="modal-head">
-      <div class="icon">💬</div>
-      <h3>پشتیبانی</h3>
-    </div>
-    <a href="https://discord.gg/yourinvite" target="_blank" class="support-option">
-      <span style="font-size:1.5rem;">💬</span>
-      <div><div style="font-weight:700;color:var(--neon);">Discord</div><div style="font-size:.75rem;color:var(--muted);">پشتیبانی سریع</div></div>
+    <button class="close" onclick="hideModal('supportModal')">✕</button>
+    <h3>💬 پشتیبانی</h3>
+    <a href="https://discord.gg/yourinvite" target="_blank" class="opt">
+      <span style="font-size:1.5rem">💬</span>
+      <div><div style="font-weight:700;color:#39ff88">Discord</div><div style="font-size:.75rem;color:#9fc9b3">پشتیبانی سریع</div></div>
     </a>
-    <a href="https://t.me/yourchannel" target="_blank" class="support-option">
-      <span style="font-size:1.5rem;">📱</span>
-      <div><div style="font-weight:700;color:var(--neon);">تلگرام</div><div style="font-size:.75rem;color:var(--muted);">پشتیبانی تلگرامی</div></div>
+    <a href="https://t.me/yourchannel" target="_blank" class="opt">
+      <span style="font-size:1.5rem">📱</span>
+      <div><div style="font-weight:700;color:#39ff88">تلگرام</div><div style="font-size:.75rem;color:#9fc9b3">پشتیبانی تلگرامی</div></div>
     </a>
   </div>
 </div>
 
 <script>
-var currentGateway = '';
-var currentItem = '';
-var currentPrice = '';
+var gateway='',item='',price='';
 
-function toggleTheme() {
+function toggleTheme(){
   document.body.classList.toggle('light');
-  var isLight = document.body.classList.contains('light');
-  document.getElementById('themeBtn').textContent = isLight ? '☀️' : '🌙';
-  try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e){}
+  var light=document.body.classList.contains('light');
+  document.getElementById('themeBtn').textContent=light?'☀️':'🌙';
+  try{localStorage.setItem('theme',light?'light':'dark')}catch(e){}
 }
 
-function copyIP() {
-  var ip = document.getElementById('serverIP').textContent.trim();
-  var btn = document.getElementById('copyBtn');
-  var ta = document.createElement('textarea');
-  ta.value = ip;
-  ta.style.position = 'fixed';
-  ta.style.opacity = '0';
+function copyIP(){
+  var ip=document.getElementById('ip').textContent.trim();
+  var ta=document.createElement('textarea');
+  ta.value=ip;
+  ta.style.position='fixed';
+  ta.style.opacity='0';
   document.body.appendChild(ta);
   ta.select();
-  try { document.execCommand('copy'); } catch(e){}
+  try{document.execCommand('copy')}catch(e){}
   document.body.removeChild(ta);
-  btn.textContent = '✓ کپی شد';
-  btn.classList.add('done');
-  setTimeout(function(){ btn.textContent = 'کپی'; btn.classList.remove('done'); }, 1800);
+  alert('کپی شد: '+ip);
 }
 
-function showTab(name, btn) {
-  var tabs = document.querySelectorAll('.tab-btn');
-  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+function showTab(name,btn){
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++)tabs[i].classList.remove('active');
   btn.classList.add('active');
-  var contents = document.querySelectorAll('.tab-content');
-  for (var i = 0; i < contents.length; i++) contents[i].classList.remove('active');
-  document.getElementById(name + '-tab').classList.add('active');
+  var contents=document.querySelectorAll('.tab-content');
+  for(var i=0;i<contents.length;i++)contents[i].style.display='none';
+  document.getElementById(name).style.display='block';
 }
 
-function openBuy(item, price, gateway) {
-  currentItem = item;
-  currentPrice = price;
-  currentGateway = gateway;
-  document.getElementById('modalDesc').textContent = 'خرید ' + item + ' - ' + price + ' تومان';
-  document.getElementById('buyModal').classList.add('show');
-  setTimeout(function(){ document.getElementById('mcUsername').focus(); }, 150);
+function openBuy(i,p,g){
+  item=i;price=p;gateway=g;
+  document.getElementById('modalDesc').textContent='خرید '+i+' - '+p+' تومان';
+  showModal('buyModal');
+  setTimeout(function(){document.getElementById('username').focus()},150);
 }
 
-function submitBuy(e) {
+function submitBuy(e){
   e.preventDefault();
-  var username = document.getElementById('mcUsername').value.trim();
-  var email = document.getElementById('email').value.trim();
-  if (!username) return;
-  var url = currentGateway + '&mc_username=' + encodeURIComponent(username);
-  if (email) url += '&email=' + encodeURIComponent(email);
-  window.location.href = url;
+  var u=document.getElementById('username').value.trim();
+  var em=document.getElementById('email').value.trim();
+  if(!u){alert('نام کاربری رو وارد کن');return}
+  var url=gateway+'&mc_username='+encodeURIComponent(u);
+  if(em)url+='&email='+encodeURIComponent(em);
+  window.location.href=url;
 }
 
-function closeModal(id) {
-  document.getElementById(id).classList.remove('show');
-}
+function showModal(id){document.getElementById(id).classList.add('show')}
+function hideModal(id){document.getElementById(id).classList.remove('show')}
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    var modals = document.querySelectorAll('.modal-overlay.show');
-    for (var i = 0; i < modals.length; i++) modals[i].classList.remove('show');
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    var m=document.querySelectorAll('.overlay.show');
+    for(var i=0;i<m.length;i++)m[i].classList.remove('show');
   }
 });
 
-window.addEventListener('click', function(e) {
-  if (e.target.classList.contains('modal-overlay')) {
-    e.target.classList.remove('show');
-  }
-});
-
-window.addEventListener('DOMContentLoaded', function() {
-  try {
-    if (localStorage.getItem('theme') === 'light') {
+window.onload=function(){
+  try{
+    if(localStorage.getItem('theme')==='light'){
       document.body.classList.add('light');
-      document.getElementById('themeBtn').textContent = '☀️';
+      document.getElementById('themeBtn').textContent='☀️';
     }
-  } catch(e){}
-  console.log('✅ BlueBerry MC loaded successfully');
-});
+  }catch(e){}
+};
 </script>
 </body>
-</html>
+          </html>

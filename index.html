@@ -14,9 +14,10 @@
   --green:#39ff88;--green-dark:#16a34a;
   --text:#f0f9ff;--muted:#94b8d4;--border:rgba(56,189,248,.18)
 }
-html{scroll-padding-top:85px}
+html{scroll-behavior:smooth}
+section[id]{scroll-margin-top:80px}
 body{margin:0;font-family:'Vazirmatn',Tahoma,sans-serif;color:var(--text);background:radial-gradient(ellipse at 50% 0%,#0c2e55,transparent 48%),var(--bg);overflow-x:hidden;line-height:1.7}
-a{color:inherit;text-decoration:none}
+a{color:inherit;text-decoration:none;cursor:pointer}
 button{font:inherit;cursor:pointer;font-family:inherit}
 .container{width:min(1120px,92%);margin:auto}
 header{position:sticky;top:0;z-index:20;background:rgba(10,22,40,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
@@ -25,7 +26,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(10,22,40,.88);backdrop-f
 .brand span{color:var(--green)}
 .logo{width:43px;height:43px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--green));color:#07150a;font-size:22px;font-weight:900;box-shadow:0 0 20px rgba(56,189,248,.5)}
 .navlinks{display:flex;align-items:center;gap:22px}
-.navlinks a{font-size:13px;color:var(--muted);font-weight:600;transition:.2s;cursor:pointer}
+.navlinks a{font-size:13px;color:var(--muted);font-weight:600;transition:.2s}
 .navlinks a:hover{color:var(--blue)}
 .menu-btn{display:none;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:10px}
 .btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;border:1px solid transparent;border-radius:12px;padding:12px 18px;font-size:13px;font-weight:800;transition:.25s;cursor:pointer}
@@ -107,7 +108,7 @@ footer p{color:var(--muted);font-size:11px;line-height:1.8}
 @media(max-width:850px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .navlinks{display:none;position:absolute;top:72px;right:4%;left:4%;padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;flex-direction:column;align-items:stretch;gap:18px}
+  .navlinks{display:none;position:absolute;top:72px;right:4%;left:4%;padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:14px;flex-direction:column;align-items:stretch;gap:18px;z-index:100}
   .navlinks.open{display:flex}
   .menu-btn{display:block}
   .nav>.btn-primary{display:none}
@@ -126,16 +127,16 @@ footer p{color:var(--muted);font-size:11px;line-height:1.8}
 
 <header>
   <div class="container nav">
-    <a class="brand" onclick="goTo(null,'home')"><div class="logo">B</div><div>Blue<span>Bery</span>MC</div></a>
+    <a class="brand" href="#home"><div class="logo">B</div><div>Blue<span>Bery</span>MC</div></a>
     <button class="menu-btn" onclick="toggleMenu()">☰ منو</button>
     <nav class="navlinks" id="navlinks">
-      <a onclick="goTo(event,'home')">خانه</a>
-      <a onclick="goTo(event,'features')">امکانات</a>
-      <a onclick="goTo(event,'status')">وضعیت سرور</a>
-      <a onclick="goTo(event,'shop')">فروشگاه</a>
-      <a onclick="goTo(event,'support')">پشتیبانی</a>
+      <a href="#home">خانه</a>
+      <a href="#features">امکانات</a>
+      <a href="#status">وضعیت سرور</a>
+      <a href="#shop">فروشگاه</a>
+      <a href="#support">پشتیبانی</a>
     </nav>
-    <a onclick="goTo(null,'shop')" class="btn btn-primary">🛒 فروشگاه</a>
+    <a href="#shop" class="btn btn-primary">🛒 فروشگاه</a>
   </div>
 </header>
 
@@ -147,8 +148,8 @@ footer p{color:var(--muted);font-size:11px;line-height:1.8}
     <h1>BLUEBERYMC</h1>
     <p>به دنیای BlueBeryMC خوش اومدی! 🌿 با دوستات بازی کن، ماجراجویی کن و تجربه ماینکرافت خودت رو بساز.</p>
     <div class="hero-actions">
-      <button class="btn btn-primary" onclick="goTo(null,'status')">🟢 بررسی وضعیت سرور</button>
-      <button class="btn btn-dark" onclick="goTo(null,'shop')">⚔️ فروشگاه</button>
+      <a href="#status" class="btn btn-primary">🟢 بررسی وضعیت سرور</a>
+      <a href="#shop" class="btn btn-dark">⚔️ فروشگاه</a>
     </div>
     <div class="server-box">
       <div><small>آدرس ورود به سرور</small><div class="server-ip" id="ip">play.blueberymc.ir</div></div>
@@ -302,7 +303,7 @@ footer p{color:var(--muted);font-size:11px;line-height:1.8}
 
 <footer>
   <div class="container footer-inner">
-    <a class="brand" onclick="goTo(null,'home')"><div class="logo">B</div><div>Blue<span>Bery</span>MC</div></a>
+    <a class="brand" href="#home"><div class="logo">B</div><div>Blue<span>Bery</span>MC</div></a>
     <p>© <span id="year"></span> BlueBeryMC — تمامی حقوق محفوظ است.<br>ساخته‌شده با 💚 برای جامعه ماینکرافت</p>
   </div>
 </footer>
@@ -336,19 +337,25 @@ var item = '';
 var price = '';
 var toastTimer;
 
-function goTo(e, id) {
-  if (e) e.preventDefault();
-  var el = document.getElementById(id);
-  if (!el) return;
-  var y = el.getBoundingClientRect().top + window.pageYOffset - 75;
-  window.scrollTo({ top: y, behavior: 'smooth' });
-  var nav = document.getElementById('navlinks');
-  if (nav) nav.classList.remove('open');
-  var btn = document.querySelector('.menu-btn');
-  if (btn) btn.textContent = '☰ منو';
-}
-
 function notify(msg) {
   var t = document.getElementById('toast');
   t.textContent = msg;
-  t.class
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 2800);
+}
+
+function copyIP() {
+  var ip = document.getElementById('ip').textContent.trim();
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(ip).then(function() {
+      notify('✅ آدرس کپی شد: ' + ip);
+    }).catch(function() { fallbackCopy(ip); });
+  } else {
+    fallbackCopy(ip);
+  }
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text

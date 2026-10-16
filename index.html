@@ -316,20 +316,6 @@
     margin:0 auto 20px;box-shadow:0 0 45px rgba(57,255,136,.5);
   }
 
-  /* دکمه شناور پشتیبانی */
-  .support-btn{
-    position:fixed;bottom:24px;left:24px;z-index:999;
-    width:60px;height:60px;border-radius:50%;
-    background:linear-gradient(135deg,#22c55e,#16a34a);
-    border:none;cursor:pointer;display:grid;place-items:center;
-    font-size:1.7rem;box-shadow:0 8px 30px rgba(57,255,136,.5);
-    transition:.3s;color:#04140c;
-  }
-  .support-btn:hover{
-    transform:scale(1.1) rotate(10deg);
-    box-shadow:0 12px 40px rgba(57,255,136,.7);
-  }
-
   footer{
     text-align:center;padding:40px 6%;
     border-top:1px solid rgba(57,255,136,.12);
@@ -552,8 +538,17 @@
   </div>
 </section>
 
-<!-- دکمه شناور پشتیبانی -->
-<button class="support-btn" id="supportBtn" title="پشتیبانی">💬</button>
-
 <!-- مودال یوزر ماینکرفت -->
-<div class="m
+<div class="modal-overlay" id="usernameModal">
+  <div class="modal">
+    <button class="modal-close" id="closeUsername">✕</button>
+    <div class="modal-head">
+      <div class="icon">🫐</div>
+      <h3>نام کاربری ماینکرفتت رو وارد کن</h3>
+      <p>لطفاً <strong style="color:var(--neon)">نام کاربری ماینکرفت</strong> خودت رو وارد کن، سپس به درگاه پرداخت منتقل می‌شی.</p>
+    </div>
+    <div class="field">
+      <label>نام کاربری ماینکرفت</label>
+      <input type="text" id="mcUsername" placeholder="مثال: KING_SHM" autocomplete="off">
+    </div>
+    <button class="btn-submit" id="submitUsernam

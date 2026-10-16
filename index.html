@@ -551,4 +551,167 @@
       <label>نام کاربری ماینکرفت</label>
       <input type="text" id="mcUsername" placeholder="مثال: KING_SHM" autocomplete="off">
     </div>
-    <button class="btn-submit" id="submitUsernam
+    <button class="btn-submit" id="submitUsername">
+      <span id="submitBtnText">تأیید و انتقال به درگاه</span>
+    </button>
+  </div>
+</div>
+
+<!-- مودال موفقیت -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="success-icon">✓</div>
+      <h3 style="color:var(--neon)">سفارش ثبت شد!</h3>
+      <p>سفارش تو با موفقیت ثبت شد.<br>ادمین به زودی رنک/کریت رو برات فعال می‌کنه.</p>
+    </div>
+    <button class="btn-submit" id="closeSuccess">باشه، ممنون!</button>
+  </div>
+</div>
+
+<footer>
+  ساخته شده با 💚 برای <strong>BlueBerry MC</strong> — تمامی حقوق محفوظ است © 2025
+</footer>
+
+<script>
+  // ============ Apps Script URL ============
+  const GOOGLE_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL';
+
+  let currentItem = null;
+  let currentPrice = null;
+  let currentGateway = null;
+
+  // ============ کپی آدرس سرور ============
+  const copyBtn = document.getElementById('copyBtn');
+  const copyText = document.getElementById('copyText');
+  const serverIP = 'play.blueberymc.ir';
+
+  copyBtn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(serverIP);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = serverIP;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    copyBtn.classList.add('done');
+    copyText.textContent = '✓ کپی شد!';
+    setTimeout(() => {
+      copyBtn.classList.remove('done');
+      copyText.textContent = 'کپی آدرس سرور';
+    }, 2000);
+  });
+
+  // ============ منوی موبایل ============
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
+
+  // ============ مودال‌ها ============
+  const usernameModal = document.getElementById('usernameModal');
+  const successModal = document.getElementById('successModal');
+
+  function openModal(id) {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show'));
+    document.getElementById(id).classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAllModals() {
+    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('show'));
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('closeUsername').addEventListener('click', closeAllModals);
+  document.getElementById('closeSuccess').addEventListener('click', closeAllModals);
+
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) closeAllModals();
+    });
+  });
+
+  // ============ دکمه‌های خرید ============
+  document.querySelectorAll('.buy-btn[data-item]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentItem = btn.dataset.item;
+      currentPrice = btn.dataset.price;
+      currentGateway = btn.dataset.gateway;
+      document.getElementById('mcUsername').value = '';
+      openModal('usernameModal');
+      setTimeout(() => document.getElementById('mcUsername').focus(), 300);
+    });
+  });
+
+  // ============ ثبت یوزر و رفتن به درگاه ============
+  document.getElementById('submitUsername').addEventListener('click', async () => {
+    const username = document.getElementById('mcUsername').value.trim();
+    if (!username) {
+      alert('لطفاً نام کاربری ماینکرفت رو وارد کن!');
+      return;
+    }
+
+    const btn = document.getElementById('submitUsername');
+    const btnText = document.getElementById('submitBtnText');
+    btn.disabled = true;
+    btnText.innerHTML = '<span class="spinner"></span> در حال ارسال...';
+
+    if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_URL') {
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            time: new Date().toLocaleString('fa-IR'),
+            username: username,
+            item: currentItem,
+            price: currentPrice
+          })
+        });
+      } catch (e) {
+        console.error('Apps Script error:', e);
+      }
+    }
+
+    setTimeout(() => {
+      if (currentGateway) {
+        window.location.href = currentGateway;
+      } else {
+        btn.disabled = false;
+        btnText.textContent = 'تأیید و انتقال به درگاه';
+        alert('خطا: لینک درگاه پیدا نشد!');
+      }
+    }, 500);
+  });
+
+  // ============ بستن با ESC ============
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeAllModals();
+  });
+</script>
+
+<!-- Goftino Support Widget -->
+<script>
+  !function(){
+    function t(){
+      var t=document.createElement("script");
+      t.type="text/javascript";
+      t.async=!0;
+      t.src="https://www.goftino.com/widget/6ac82cbf23bf62f40d45afda";
+      document.head.appendChild(t)
+    }
+    "complete"===document.readyState?t():window.addEventListener("load",t)
+  }();
+</script>
+
+</body>
+</html>
